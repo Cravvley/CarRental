@@ -1,5 +1,6 @@
 package car_rental_database_package;
-import car_rental_database_package.entities.User;
+
+import car_rental_entities_package.User;
 
 public class dbTest {
 
@@ -13,7 +14,5 @@ public class dbTest {
               System.out.println(user.email);
           }  
            
-          User userxd3=new User(5,"etet","Net","test@gmail.com");
-          userRepository.updateUser(userxd3);
     }   
 }

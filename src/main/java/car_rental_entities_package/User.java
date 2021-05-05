@@ -1,4 +1,4 @@
-package car_rental_database_package.entities;
+package car_rental_entities_package;
 
 public class User {
     public int id;

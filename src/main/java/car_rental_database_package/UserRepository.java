@@ -1,13 +1,12 @@
 package car_rental_database_package;
 
-import car_rental_database_package.entities.User;
+import car_rental_entities_package.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class UserRepository {
  
@@ -84,8 +83,8 @@ public class UserRepository {
         }
     }  
     
-    public HashSet<User> selectAll(){
-        HashSet<User> users= new HashSet();
+    public ArrayList<User> selectAll(){
+        ArrayList<User> users= new ArrayList<User>();
         
         Connection con= DbConnection.connect();
         Statement ps = null; 
@@ -111,7 +110,7 @@ public class UserRepository {
                 System.out.println(e.toString());
                }
         }
-       
+    
         return users;
     }
 }
