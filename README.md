@@ -1,1 +1,1 @@
-Desktop application for care rengal with using java swing
+Desktop application for care rental with using java swing
