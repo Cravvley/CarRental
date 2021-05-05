@@ -6,13 +6,11 @@ public class dbTest {
 
     public static void main(String []args){
         UserRepository userRepository = new UserRepository();
-          var userList=userRepository.selectAll();
-          for(User user : userList){
-              System.out.println(user.id);
-              System.out.println(user.firstName);
-              System.out.println(user.lastName);
-              System.out.println(user.email);
-          }  
-           
+ 
+        var item = userRepository.getUser(1);
+        System.out.println(item.id);
+        System.out.println(item.firstName);
+        System.out.println(item.lastName);
+        System.out.println(item.email);
     }   
 }

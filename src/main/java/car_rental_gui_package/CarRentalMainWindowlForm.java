@@ -8,10 +8,15 @@ package car_rental_gui_package;
 public class CarRentalMainWindowlForm extends javax.swing.JFrame {
 
     public CarRentalMainWindowlForm() {
+        
+          CarRentalLoginWindowForm loginWindow=new CarRentalLoginWindowForm();
+       loginWindow.setVisible(true);
+        
+        setVisible(true);
         setSize(500,500);
         setLocation(650,350);
         setResizable(false);
-        initComponents();
+        initComponents();  
     }
 
     @SuppressWarnings("unchecked")

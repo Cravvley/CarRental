@@ -58,6 +58,33 @@ public class UserRepository {
         }
     }
     
+    public User getUser(int id) {
+        Connection con= DbConnection.connect();
+        PreparedStatement ps = null; 
+        ResultSet rs=null; 
+        User user=null;
+        try {
+            String sql = "SELECT * FROM users WHERE id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs=ps.executeQuery();
+            
+            user=new User(rs.getInt("id"),rs.getString("firstName"),
+                rs.getString("lastName"),rs.getString("email")); 
+            
+        } catch(SQLException e) {
+            System.out.println(e.toString());
+        } finally {
+            try{
+                ps.close();
+                con.close();
+            } catch(SQLException e) {
+                System.out.println(e.toString());
+               }
+        }
+        return user;
+    }
+    
     public void updateUser(User user) {
         Connection con= DbConnection.connect();
         PreparedStatement ps = null; 
