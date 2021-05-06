@@ -20,22 +20,14 @@ public class RentalItemRepository {
         Connection con= DbConnection.connect();
         PreparedStatement ps = null; 
         
-    int id;
-    int carId;
-    int userId;
-    int daysOfRent;
-    float price;
-    Date dateOfLoan;
-        
         try {
             String sql = "INSERT INTO RentalItems (id, carId, userId, "
-                    + "daysOfRent, price, dateOfLoan) VALUES(?,?,?,?,?,?)";
+                    + "daysOfRent, price) VALUES(?,?,?,?,?)";
             ps = con.prepareStatement(sql);
             ps.setInt(2, rentalItem.getCarId());
             ps.setInt(3, rentalItem.getUserId());
             ps.setInt(4, rentalItem.getDaysOfRent());
             ps.setFloat(5, rentalItem.getPrice());
-            ps.setDate(6, rentalItem.getDateOfLoan());
             ps.execute();
         } catch(SQLException e) {
             System.out.println(e.toString());
@@ -81,8 +73,7 @@ public class RentalItemRepository {
             ps.setInt(1, id);
             rs=ps.executeQuery();
             rentalItem=new RentalItem(rs.getInt("id"),rs.getInt("carId"),
-                rs.getInt("userId"),rs.getInt("daysOfRent"),rs.getFloat("price")
-                    ,rs.getDate("dateOfLoan")); 
+                rs.getInt("userId"),rs.getInt("daysOfRent"),rs.getFloat("price")); 
             
         } catch(SQLException e) {
             System.out.println(e.toString());
@@ -106,14 +97,14 @@ public class RentalItemRepository {
         
         try {
             String sql = "SELECT id, carId, userId, daysOfRent "
-                    + ", price, dateOfLoan FROM RentalItems";
+                    + ", price FROM RentalItems";
             ps = con.createStatement();
             rs=ps.executeQuery(sql);
           
             while(rs.next()){
                 rentals.add(new RentalItem(rs.getInt("id"),rs.getInt("carId"),
                 rs.getInt("userId"),rs.getInt("daysOfRent"),
-                        rs.getFloat("price"),rs.getDate("dateOfLoan")));                           
+                        rs.getFloat("price")));                           
             }
         } catch(SQLException e) {
             System.out.println(e.toString());

@@ -241,10 +241,9 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         float pricePerDay = Float.parseFloat(carTable.getModel().
                 getValueAt(userRow,5).toString());
         int daysOfRent=Integer.parseInt(daysOfRentField.getText());
-        Date date=new Date(Calendar.getInstance().getTime().getTime());
-  
+
         var rentalItem=new RentalItem(0,carIdValue,userIdValue,daysOfRent,
-                daysOfRent*pricePerDay,date);  
+                daysOfRent*pricePerDay);  
         rentalItemRepository.addRentalItem(rentalItem);
         
         var carItem=carRepository.getCar(carIdValue);

@@ -8,16 +8,13 @@ public class RentalItem {
     int userId;
     int daysOfRent;
     float price;
-    Date dateOfLoan;
     
-    public RentalItem(int id,int carId,int userId,int daysOfRent,float price,
-                        Date dateOfLoan){
+    public RentalItem(int id,int carId,int userId,int daysOfRent,float price){
         this.id=id;
         this.carId=carId;
         this.userId=userId;
         this.daysOfRent=daysOfRent;
         this.price=price;
-        this.dateOfLoan=dateOfLoan;
     }
     
     public int getId(){
@@ -58,13 +55,5 @@ public class RentalItem {
     
     public void setPrice(int price){
         this.price=price;
-    }
-    
-     public Date getDateOfLoan(){
-        return this.dateOfLoan;
-    }
-    
-    public void setDateOfLoan(Date dateOfLoan){
-        this.dateOfLoan=dateOfLoan;
     }
 }
