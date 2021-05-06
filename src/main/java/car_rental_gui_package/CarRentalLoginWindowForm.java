@@ -93,7 +93,7 @@ public class CarRentalLoginWindowForm extends javax.swing.JFrame {
         if(isMatched){
             JOptionPane.showMessageDialog(null,"Username and password are correct");
             CarRentalMainWindowForm mainWindow = new CarRentalMainWindowForm();
-            setVisible(false);
+            dispose();
         }else{
             JOptionPane.showMessageDialog(null,"Username and password are incorrect");
             usernameField.setText("");

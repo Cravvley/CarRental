@@ -1,16 +1,16 @@
 package car_rental_entities_package;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class RentalItem {
     int id;
     int carId;
     int userId;
     int daysOfRent;
-    int price;
+    float price;
     Date dateOfLoan;
     
-    public RentalItem(int id,int carId,int userId,int daysOfRent,int price,
+    public RentalItem(int id,int carId,int userId,int daysOfRent,float price,
                         Date dateOfLoan){
         this.id=id;
         this.carId=carId;
@@ -52,7 +52,7 @@ public class RentalItem {
         this.daysOfRent=daysOfRent;
     }
     
-    public int getPrice(){
+    public float getPrice(){
         return this.price;
     }
     

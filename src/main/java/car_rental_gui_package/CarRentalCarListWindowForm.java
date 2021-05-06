@@ -2,6 +2,7 @@ package car_rental_gui_package;
 
 import car_rental_database_package.CarRepository;
 import car_rental_entities_package.Car;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CarRentalCarListWindowForm extends javax.swing.JFrame {
@@ -61,6 +62,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         yearOfProductionlLabel1 = new javax.swing.JLabel();
         rentalPricePerDayLabel = new javax.swing.JLabel();
         rentalPricePerDayField = new javax.swing.JTextField();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,37 +133,49 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
 
         rentalPricePerDayLabel.setText("Rental price per day:");
 
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(yearOfProductionlLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                            .addComponent(brandLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(modelLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fuelTypeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(rentalPricePerDayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(modelField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                            .addComponent(fuelTypeField)
-                            .addComponent(brandField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yearOfProductionField)
-                            .addComponent(rentalPricePerDayField, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addComponent(addCarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
-                        .addComponent(updateCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)
-                        .addComponent(deleteCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
-                    .addComponent(jScrollPane1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(yearOfProductionlLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                    .addComponent(brandLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(modelLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(fuelTypeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(rentalPricePerDayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(modelField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                                    .addComponent(fuelTypeField)
+                                    .addComponent(brandField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(yearOfProductionField)
+                                    .addComponent(rentalPricePerDayField, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(addCarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 6, Short.MAX_VALUE)
+                                .addComponent(updateCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105)
+                                .addComponent(deleteCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14))
+                            .addComponent(jScrollPane1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -172,12 +186,12 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(brandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(brandLabel))
@@ -235,13 +249,21 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addCarBtnActionPerformed
 
     private void deleteCarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCarBtnActionPerformed
-        int column = 0;
+ 
         int row = carTable.getSelectedRow();
-        int value = Integer.parseInt(carTable.getModel().
-                getValueAt(row, column).toString());
-        carRepository.removeCar(value);
         
-        showCars(true,false);
+        boolean isRent=Boolean.parseBoolean(carTable.getModel()
+                .getValueAt(row, 6).toString());
+        
+        if(isRent){
+            JOptionPane.showMessageDialog(null,"The car is rented you cannot delete it");
+        }else{
+            int value = Integer.parseInt(carTable.getModel().
+            getValueAt(row, 0).toString());
+            
+            carRepository.removeCar(value);
+            showCars(true,false);
+        }
     }//GEN-LAST:event_deleteCarBtnActionPerformed
 
     private void brandFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandFieldActionPerformed
@@ -249,28 +271,41 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
     }//GEN-LAST:event_brandFieldActionPerformed
 
     private void updateCarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCarBtnActionPerformed
-         int row = carTable.getSelectedRow();
-
-        int id = Integer.parseInt(carTable.getModel().
-            getValueAt(row, 0).toString());
-        String brand = carTable.getModel().
-        getValueAt(row, 1).toString();
-        String model = carTable.getModel().
-        getValueAt(row, 2).toString();
-        String fuelType = carTable.getModel().
-        getValueAt(row, 3).toString();
-        int yearOfProduction = Integer.parseInt(carTable.getModel().
-        getValueAt(row, 4).toString());
-        float rentalPricePerDay = Float.parseFloat(carTable.getModel().
-        getValueAt(row, 5).toString());
-        boolean isRent=Boolean.parseBoolean(carTable.getModel().
-                getValueAt(row,6).toString());
         
-        carRepository.updateCar(new Car(id,brand,model,fuelType,yearOfProduction
-        ,rentalPricePerDay,isRent));
+        int row = carTable.getSelectedRow();
+        
+        boolean isRent=Boolean.parseBoolean(carTable.getModel()
+              .getValueAt(row, 6).toString());
+        
+        if(isRent){
+            JOptionPane.showMessageDialog(null,"The car is rented you cannot modify it");
+        }else{
+           int id = Integer.parseInt(carTable.getModel().
+           getValueAt(row, 0).toString());
+           String brand = carTable.getModel().
+           getValueAt(row, 1).toString();
+           String model = carTable.getModel().
+           getValueAt(row, 2).toString();
+           String fuelType = carTable.getModel().
+           getValueAt(row, 3).toString();
+           int yearOfProduction = Integer.parseInt(carTable.getModel().
+           getValueAt(row, 4).toString());
+           float rentalPricePerDay = Float.parseFloat(carTable.getModel().
+           getValueAt(row, 5).toString());
+           boolean isRentFromTable=Boolean.parseBoolean(carTable.getModel().
+                   getValueAt(row,6).toString());
 
-        showCars(true,false);
+           carRepository.updateCar(new Car(id,brand,model,fuelType,yearOfProduction
+           ,rentalPricePerDay,isRentFromTable));
+
+           showCars(true,false);
+        } 
     }//GEN-LAST:event_updateCarBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        CarRentalMainWindowForm mainWindow=new CarRentalMainWindowForm();
+        dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
 
     public static void main(String args[]) {
        
@@ -300,6 +335,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCarBtn;
+    private javax.swing.JButton backBtn;
     private javax.swing.JTextField brandField;
     private javax.swing.JLabel brandLabel;
     private javax.swing.JTable carTable;

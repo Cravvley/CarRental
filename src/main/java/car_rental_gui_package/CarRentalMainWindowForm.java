@@ -1,18 +1,25 @@
 package car_rental_gui_package;
 
 import car_rental_database_package.CarRepository;
+import car_rental_database_package.RentalItemRepository;
 import car_rental_database_package.UserRepository;
+import car_rental_entities_package.RentalItem;
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 
 public class CarRentalMainWindowForm extends javax.swing.JFrame {
 
     UserRepository userRepository;
     CarRepository carRepository;
+    RentalItemRepository rentalItemRepository;
     
     public CarRentalMainWindowForm() {
         
         userRepository=new UserRepository();
         carRepository=new CarRepository();
+        rentalItemRepository= new RentalItemRepository();
         
         setVisible(true);
         setSize(500,500);
@@ -23,8 +30,7 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         initComponents();    
         
         showUsers(); 
-        showCars(true,false);    
-        
+        showCars(false,false);        
     }
     
      public void showUsers(){
@@ -70,6 +76,8 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         carTable = new javax.swing.JTable();
         carRentBtn = new javax.swing.JButton();
         rentListBtn = new javax.swing.JButton();
+        daysOfRentLabel = new javax.swing.JLabel();
+        daysOfRentField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,7 +155,7 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
             }
         });
 
-        rentListBtn.setText("Car list");
+        rentListBtn.setText("Rent list");
         rentListBtn.setToolTipText("");
         rentListBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,44 +163,58 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
             }
         });
 
+        daysOfRentLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        daysOfRentLabel.setText("Days of rent :");
+
+        daysOfRentField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(rentListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(carListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(userListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(30, 30, 30))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 752, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(carRentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 1582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(carRentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 1582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(daysOfRentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(daysOfRentField, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rentListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(carListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rentListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(userListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(daysOfRentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(daysOfRentField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(carRentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -200,14 +222,37 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
 
     private void userListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userListBtnActionPerformed
        CarRentalUserListWindowForm userListWindow=new CarRentalUserListWindowForm();
+       dispose();
     }//GEN-LAST:event_userListBtnActionPerformed
 
     private void carListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carListBtnActionPerformed
           CarRentalCarListWindowForm carListWindow=new CarRentalCarListWindowForm();
+          dispose();
     }//GEN-LAST:event_carListBtnActionPerformed
 
     private void carRentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carRentBtnActionPerformed
-        // TODO add your handling code here:
+        int userRow = userTable.getSelectedRow();
+        int carRow = carTable.getSelectedRow();
+        
+        int userIdValue = Integer.parseInt(userTable.getModel().
+                getValueAt(userRow, 0).toString());
+        int carIdValue = Integer.parseInt(carTable.getModel().
+                getValueAt(userRow, 0).toString());
+        float pricePerDay = Float.parseFloat(carTable.getModel().
+                getValueAt(userRow,5).toString());
+        int daysOfRent=Integer.parseInt(daysOfRentField.getText());
+        Date date=new Date(Calendar.getInstance().getTime().getTime());
+  
+        var rentalItem=new RentalItem(0,carIdValue,userIdValue,daysOfRent,
+                daysOfRent*pricePerDay,date);  
+        rentalItemRepository.addRentalItem(rentalItem);
+        
+        var carItem=carRepository.getCar(carIdValue);
+        carItem.setIsRent(true);
+        carRepository.updateCar(carItem);
+     
+        daysOfRentField.setText("");
+        showCars(false,false);   
     }//GEN-LAST:event_carRentBtnActionPerformed
 
     private void rentListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentListBtnActionPerformed
@@ -227,6 +272,8 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
     private javax.swing.JButton carListBtn;
     private javax.swing.JButton carRentBtn;
     private javax.swing.JTable carTable;
+    private javax.swing.JTextField daysOfRentField;
+    private javax.swing.JLabel daysOfRentLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton rentListBtn;
