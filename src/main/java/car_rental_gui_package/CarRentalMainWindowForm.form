@@ -24,9 +24,11 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="906" max="32767" attributes="0"/>
-              <Component id="userListBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
+              <EmptySpace pref="587" max="32767" attributes="0"/>
+              <Component id="carListBtn" min="-2" pref="259" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="userListBtn" min="-2" pref="259" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,7 +36,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-              <Component id="userListBtn" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="userListBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="carListBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="670" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -43,11 +48,20 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="userListBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Userlist"/>
+        <Property name="text" type="java.lang.String" value="User list"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userListBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="carListBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Car list"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="carListBtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

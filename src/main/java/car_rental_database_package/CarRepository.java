@@ -20,12 +20,14 @@ public class CarRepository {
        PreparedStatement ps = null; 
 
        try {
-           String sql = "INSERT INTO cars(id, brand, model, fuelType, yearOfProduction) VALUES(?,?,?,?,?)";
+           String sql = "INSERT INTO cars(id, brand, model, fuelType, "
+                   + "yearOfProduction, rentalPricePerDay) VALUES(?,?,?,?,?,?)";
            ps = con.prepareStatement(sql);
            ps.setString(2, car.getBrand());
            ps.setString(3, car.getModel());
            ps.setString(4, car.getFuelType());
            ps.setInt(5, car.getYearOfProduction());
+           ps.setFloat(6, car.getRentalPricePerDay());
            ps.execute();
        } catch(SQLException e) {
            System.out.println(e.toString());
@@ -73,7 +75,7 @@ public class CarRepository {
 
            car=new Car(rs.getInt("id"),rs.getString("brand"),
                rs.getString("model"),rs.getString("fuelType"),
-                   rs.getInt("yearOfProduction")); 
+                   rs.getInt("yearOfProduction"),rs.getFloat("rentalPricePerDay")); 
 
        } catch(SQLException e) {
            System.out.println(e.toString());
@@ -94,13 +96,15 @@ public class CarRepository {
 
        try {
            String sql = "UPDATE cars SET brand = ? ,"
-                   + "model= ? , fuelType=? , yearOfProduction=? WHERE id = ?";
+                   + "model= ? , fuelType=? , yearOfProduction=?, "
+                   + "rentalPricePerDay WHERE id = ?";
            ps = con.prepareStatement(sql);
            ps.setString(1, car.getBrand());
            ps.setString(2, car.getModel());
            ps.setString(3, car.getFuelType());
            ps.setInt(4, car.getYearOfProduction());
-           ps.setInt(5, car.getId());
+           ps.setFloat(5,car.getRentalPricePerDay());
+           ps.setInt(6, car.getId());
            ps.execute();
        } catch(SQLException e) {
            System.out.println(e.toString());
@@ -122,7 +126,8 @@ public class CarRepository {
        ResultSet rs=null;    
 
        try {
-           String sql = "SELECT id, brand, model, fuelType, yearOfProduction "
+           String sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
+                   + "rentalPricePerDay "
                    + "FROM cars";
            ps = con.createStatement();
            rs=ps.executeQuery(sql);
@@ -130,7 +135,7 @@ public class CarRepository {
            while(rs.next()){
                cars.add(new Car(rs.getInt("id"),rs.getString("brand"),
                rs.getString("model"),rs.getString("fuelType"),
-                   rs.getInt("yearOfProduction")));                           
+                   rs.getInt("yearOfProduction"),rs.getFloat("rentalPricePerDay")));                           
            }
        } catch(SQLException e) {
            System.out.println(e.toString());

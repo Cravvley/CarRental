@@ -28,7 +28,7 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
         var userList=userRepository.selectAll();
         DefaultTableModel model = (DefaultTableModel)userTable.getModel();
         model.setRowCount(0);
-        Object[]row = new Object[6];
+        Object[]row = new Object[4];
         for(int i=0;i<userList.size();++i){
          row[0]=userList.get(i).getId();   
          row[1]=userList.get(i).getFirstName();  

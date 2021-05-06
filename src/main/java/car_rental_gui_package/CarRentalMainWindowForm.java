@@ -18,14 +18,23 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
     private void initComponents() {
 
         userListBtn = new javax.swing.JButton();
+        carListBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        userListBtn.setText("Userlist");
+        userListBtn.setText("User list");
         userListBtn.setToolTipText("");
         userListBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userListBtnActionPerformed(evt);
+            }
+        });
+
+        carListBtn.setText("Car list");
+        carListBtn.setToolTipText("");
+        carListBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carListBtnActionPerformed(evt);
             }
         });
 
@@ -34,15 +43,19 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(906, Short.MAX_VALUE)
-                .addComponent(userListBtn)
-                .addGap(151, 151, 151))
+                .addContainerGap(587, Short.MAX_VALUE)
+                .addComponent(carListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(userListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(userListBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userListBtn)
+                    .addComponent(carListBtn))
                 .addContainerGap(670, Short.MAX_VALUE))
         );
 
@@ -52,6 +65,10 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
     private void userListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userListBtnActionPerformed
        CarRentalUserListWindowForm userListWindow=new CarRentalUserListWindowForm();
     }//GEN-LAST:event_userListBtnActionPerformed
+
+    private void carListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carListBtnActionPerformed
+          CarRentalCarListWindowForm carListWindow=new CarRentalCarListWindowForm();
+    }//GEN-LAST:event_carListBtnActionPerformed
 
     public static void main(String args[]) {
  
@@ -63,6 +80,7 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton carListBtn;
     private javax.swing.JButton userListBtn;
     // End of variables declaration//GEN-END:variables
 }
