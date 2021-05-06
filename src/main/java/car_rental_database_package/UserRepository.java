@@ -21,9 +21,9 @@ public class UserRepository {
         try {
             String sql = "INSERT INTO users(id, firstName, lastName, email) VALUES(?,?,?,?)";
             ps = con.prepareStatement(sql);
-            ps.setString(2, user.firstName);
-            ps.setString(3, user.lastName);
-            ps.setString(4, user.email);
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setString(4, user.getEmail());
             ps.execute();
         } catch(SQLException e) {
             System.out.println(e.toString());
@@ -93,10 +93,10 @@ public class UserRepository {
             String sql = "UPDATE users SET firstName = ? ,"
                     + "lastName=? , email=? WHERE id = ?";
             ps = con.prepareStatement(sql);
-            ps.setString(1, user.firstName);
-            ps.setString(2, user.lastName);
-            ps.setString(3, user.email);
-            ps.setInt(4, user.id);
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getEmail());
+            ps.setInt(4, user.getId());
             ps.execute();
         } catch(SQLException e) {
             System.out.println(e.toString());
