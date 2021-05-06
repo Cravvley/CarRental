@@ -49,12 +49,12 @@ public class RentalItemRepository {
         }
     }
     
-    /*public void removeUser(int id) {
+    public void removeRentalItem(int id) {
         Connection con= DbConnection.connect();
         PreparedStatement ps = null; 
         
         try {
-            String sql = "DELETE FROM users WHERE id = ?";
+            String sql = "DELETE FROM RentalItems WHERE id = ?";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
@@ -70,19 +70,19 @@ public class RentalItemRepository {
         }
     }
     
-    public User getUser(int id) {
+    public RentalItem getRentalItem(int id) {
         Connection con= DbConnection.connect();
         PreparedStatement ps = null; 
         ResultSet rs=null; 
-        User user=null;
+        RentalItem rentalItem=null;
         try {
-            String sql = "SELECT * FROM users WHERE id = ?";
+            String sql = "SELECT * FROM RentalItems WHERE id = ?";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs=ps.executeQuery();
-            
-            user=new User(rs.getInt("id"),rs.getString("firstName"),
-                rs.getString("lastName"),rs.getString("email")); 
+            rentalItem=new RentalItem(rs.getInt("id"),rs.getInt("carId"),
+                rs.getInt("userId"),rs.getInt("daysOfRent"),rs.getFloat("price")
+                    ,rs.getDate("dateOfLoan")); 
             
         } catch(SQLException e) {
             System.out.println(e.toString());
@@ -94,49 +94,26 @@ public class RentalItemRepository {
                 System.out.println(e.toString());
                }
         }
-        return user;
+        return rentalItem;
     }
-    
-    public void updateUser(User user) {
-        Connection con= DbConnection.connect();
-        PreparedStatement ps = null; 
-        
-        try {
-            String sql = "UPDATE users SET firstName = ? ,"
-                    + "lastName=? , email=? WHERE id = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setInt(4, user.getId());
-            ps.execute();
-        } catch(SQLException e) {
-            System.out.println(e.toString());
-        } finally {
-            try{
-                ps.close();
-                con.close();
-            } catch(SQLException e) {
-                System.out.println(e.toString());
-               }
-        }
-    }  
-    
-    public ArrayList<User> selectAll(){
-        ArrayList<User> users= new ArrayList<User>();
+      
+    public ArrayList<RentalItem> selectAll(){
+        ArrayList<RentalItem> rentals= new ArrayList<RentalItem>();
         
         Connection con= DbConnection.connect();
         Statement ps = null; 
         ResultSet rs=null;    
         
         try {
-            String sql = "SELECT id, firstName, lastName, email FROM users";
+            String sql = "SELECT id, carId, userId, daysOfRent "
+                    + ", price, dateOfLoan FROM RentalItems";
             ps = con.createStatement();
             rs=ps.executeQuery(sql);
           
             while(rs.next()){
-                users.add(new User(rs.getInt("id"),rs.getString("firstName"),
-                rs.getString("lastName"),rs.getString("email")));                           
+                rentals.add(new RentalItem(rs.getInt("id"),rs.getInt("carId"),
+                rs.getInt("userId"),rs.getInt("daysOfRent"),
+                        rs.getFloat("price"),rs.getDate("dateOfLoan")));                           
             }
         } catch(SQLException e) {
             System.out.println(e.toString());
@@ -149,8 +126,7 @@ public class RentalItemRepository {
                 System.out.println(e.toString());
                }
         }
-    
-        return users;
+        return rentals;
     }
-*/
+
 }
