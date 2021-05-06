@@ -4,6 +4,7 @@ import car_rental_database_package.CarRepository;
 import car_rental_database_package.RentalItemRepository;
 import car_rental_database_package.UserRepository;
 import car_rental_entities_package.RentalItem;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -159,6 +160,19 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         daysOfRentLabel.setText("Days of rent :");
 
         daysOfRentField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        daysOfRentField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                daysOfRentFieldActionPerformed(evt);
+            }
+        });
+        daysOfRentField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                daysOfRentFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                daysOfRentFieldKeyTyped(evt);
+            }
+        });
 
         rentListBtn1.setText("Rent list");
         rentListBtn1.setToolTipText("");
@@ -212,9 +226,9 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(daysOfRentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(daysOfRentField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(carRentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(carRentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -241,7 +255,7 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         float pricePerDay = Float.parseFloat(carTable.getModel().
                 getValueAt(userRow,5).toString());
         int daysOfRent=Integer.parseInt(daysOfRentField.getText());
-
+      
         var rentalItem=new RentalItem(0,carIdValue,userIdValue,daysOfRent,
                 daysOfRent*pricePerDay);  
         rentalItemRepository.addRentalItem(rentalItem);
@@ -258,6 +272,25 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
         CarRentalRentalsListWindowForm rentalsListWindow=new CarRentalRentalsListWindowForm();
         dispose();
     }//GEN-LAST:event_rentListBtn1ActionPerformed
+
+    private void daysOfRentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daysOfRentFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_daysOfRentFieldActionPerformed
+
+    private void daysOfRentFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_daysOfRentFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_daysOfRentFieldKeyTyped
+
+    private void daysOfRentFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_daysOfRentFieldKeyPressed
+        String value = daysOfRentField.getText();
+            int l = value.length();
+            if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' ||
+                    evt.getKeyCode()==KeyEvent.VK_BACK_SPACE) {
+               daysOfRentField.setEditable(true);
+            } else {
+               daysOfRentField.setEditable(false);
+            }
+    }//GEN-LAST:event_daysOfRentFieldKeyPressed
 
     public static void main(String args[]) {
  

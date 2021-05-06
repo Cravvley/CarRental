@@ -211,6 +211,9 @@
     <Component class="javax.swing.JTextField" name="lastNameField">
     </Component>
     <Component class="javax.swing.JTextField" name="emailField">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="backBtn">
       <Properties>

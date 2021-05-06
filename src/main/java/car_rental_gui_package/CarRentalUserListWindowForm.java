@@ -2,6 +2,9 @@ package car_rental_gui_package;
 
 import car_rental_database_package.UserRepository;
 import car_rental_entities_package.User;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CarRentalUserListWindowForm extends javax.swing.JFrame {
@@ -118,6 +121,12 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
             }
         });
 
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
+
         backBtn.setText("Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,11 +203,19 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        
         String firstName=firstNameField.getText();
         String lastName=lastNameField.getText();
         String email=emailField.getText(); 
         
-        if(!firstName.isBlank()&&!lastName.isBlank()&&!email.isBlank()){
+        Matcher matcher=pattern.matcher(email);
+        
+        if(firstName.isBlank()||lastName.isBlank()||!matcher.matches()){
+                JOptionPane.showMessageDialog(null, "Please type correct data"); 
+               
+            } else{
                 userRepository.addUser(new User(0,firstName,lastName,email));
                 
                 firstNameField.setText("");
@@ -206,7 +223,7 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
                 emailField.setText("");
                 
                 showUsers();
-            } 
+            }
     }//GEN-LAST:event_addUserBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -220,6 +237,9 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteUserBtnActionPerformed
 
     private void updateUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserBtnActionPerformed
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        
         int row = userTable.getSelectedRow();
         
         int id = Integer.parseInt(userTable.getModel().
@@ -231,9 +251,16 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
         String email = userTable.getModel().
                 getValueAt(row, 3).toString();
        
-        userRepository.updateUser(new User(id,firstName,lastName,email));
         
-        showUsers();
+        Matcher matcher=pattern.matcher(email);
+        
+        if(!matcher.matches()){
+            JOptionPane.showMessageDialog(null, "Please type correct data"); 
+        }else{
+            userRepository.updateUser(new User(id,firstName,lastName,email));
+        
+            showUsers();
+        }
     }//GEN-LAST:event_updateUserBtnActionPerformed
 
     private void firstNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameFieldActionPerformed
@@ -244,6 +271,10 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
         CarRentalMainWindowForm mainWindow=new CarRentalMainWindowForm();
         dispose();
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+     
+    }//GEN-LAST:event_emailFieldActionPerformed
 
     public static void main(String args[]) {
         try {

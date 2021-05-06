@@ -2,6 +2,9 @@ package car_rental_gui_package;
 
 import car_rental_database_package.CarRepository;
 import car_rental_entities_package.Car;
+import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -121,6 +124,17 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
 
         yearOfProductionlLabel.setText("Year of production:");
 
+        yearOfProductionField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearOfProductionFieldActionPerformed(evt);
+            }
+        });
+        yearOfProductionField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                yearOfProductionFieldKeyPressed(evt);
+            }
+        });
+
         updateCarBtn.setText("Update Car");
         updateCarBtn.setPreferredSize(new java.awt.Dimension(80, 25));
         updateCarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -229,21 +243,31 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarBtnActionPerformed
+        
+        String regex = "-?(\\d*\\.)?\\d+([eE][+\\-]?\\d+)?|[nN]a[nN]|[iI]nf(inity)?";
+        Pattern pattern = Pattern.compile(regex);
+
         String brand=brandField.getText();
         String model=modelField.getText();
         String fuelType=fuelTypeField.getText();
-        int yearOfProduction=Integer.parseInt(yearOfProductionField.getText());
-        float rentalPricePerDay=Float.parseFloat(rentalPricePerDayField.getText());   
-        if(!brand.isBlank()&&!model.isBlank()&&!fuelType.isBlank()){
+        String yearOfProductionString=yearOfProductionField.getText();
+        
+        Matcher matcher=pattern.matcher(rentalPricePerDayField.getText());
+       
+        if(brand.isBlank()||model.isBlank()||fuelType.isBlank()||
+                yearOfProductionString.isBlank()||!matcher.matches()){   
+                 JOptionPane.showMessageDialog(null,"Type correct data");
+        }else{
+            float rentalPricePerDay=Float.parseFloat(rentalPricePerDayField.getText());
+            int yearOfProduction=Integer.parseInt(yearOfProductionField.getText());
             carRepository.addCar(new Car(0,brand,model,fuelType,yearOfProduction
-                ,rentalPricePerDay,false));
+                    ,rentalPricePerDay,false));
 
             brandField.setText("");
             modelField.setText("");
             fuelTypeField.setText("");
             yearOfProductionField.setText("");
             rentalPricePerDayField.setText("");
-
             showCars(true,false);
         }
     }//GEN-LAST:event_addCarBtnActionPerformed
@@ -306,6 +330,21 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         CarRentalMainWindowForm mainWindow=new CarRentalMainWindowForm();
         dispose();
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void yearOfProductionFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearOfProductionFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearOfProductionFieldActionPerformed
+
+    private void yearOfProductionFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_yearOfProductionFieldKeyPressed
+            String value = yearOfProductionField.getText();
+            int l = value.length();
+            if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' ||
+                    evt.getKeyCode()==KeyEvent.VK_BACK_SPACE) {
+               yearOfProductionField.setEditable(true);
+            } else {
+               yearOfProductionField.setEditable(false);
+            }       
+    }//GEN-LAST:event_yearOfProductionFieldKeyPressed
 
     public static void main(String args[]) {
        

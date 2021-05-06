@@ -10,7 +10,7 @@ public class CarRentalLoginWindowForm extends javax.swing.JFrame {
     public CarRentalLoginWindowForm() {
         
         adminRepository=new AdminRepository();
-        
+
         setVisible(true);
         setSize(200,200);
         setLocation(600,300);
