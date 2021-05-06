@@ -8,15 +8,17 @@ public class Car {
     String fuelType;
     int yearOfProduction;
     float rentalPricePerDay;
+    boolean isRent;
     
     public Car(int id,String brand,String model,String fuelType,int yearOfProduction
-                 ,float rentalPricePerDay){
+                 ,float rentalPricePerDay,boolean isRent){
        this.id=id;
        this.brand=brand;
        this.model=model;
        this.fuelType=fuelType;
        this.yearOfProduction=yearOfProduction;
        this.rentalPricePerDay=rentalPricePerDay;
+       this.isRent=isRent;
    }
 
    public int getId(){
@@ -65,5 +67,13 @@ public class Car {
    
    public void setRentalPricePerDay(float rentalPricePerDay){
        this.rentalPricePerDay=rentalPricePerDay;
+   }
+   
+   public boolean getIsRent(){
+       return this.isRent;
+   }
+   
+   public void setIsRent(boolean isRent){
+       this.isRent=isRent;
    }
 }

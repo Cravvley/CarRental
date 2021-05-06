@@ -21,21 +21,22 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
-        showCars();              
+        showCars(true,false);              
     }
     
-    public void showCars(){
-        var userList=carRepository.selectAll();
+    public void showCars(boolean all,boolean rent){
+        var userList=carRepository.selectAll(all,rent);
         DefaultTableModel model = (DefaultTableModel)carTable.getModel();
         model.setRowCount(0);
-        Object[]row = new Object[6];
+        Object[]row = new Object[7];
         for(int i=0;i<userList.size();++i){
          row[0]=userList.get(i).getId();   
          row[1]=userList.get(i).getBrand();  
          row[2]=userList.get(i).getModel();  
          row[3]=userList.get(i).getFuelType();  
          row[4]=userList.get(i).getYearOfProduction();     
-         row[5]=userList.get(i).getRentalPricePerDay(); 
+         row[5]=userList.get(i).getRentalPricePerDay();
+         row[6]=userList.get(i).getIsRent(); 
          model.addRow(row);
      }
     }
@@ -96,14 +97,14 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Brand", "Model", "Fuel type", "Year of production", "Rental price per day"
+                "Id", "Brand", "Model", "Fuel type", "Year of production", "Rental price per day", "Is rent"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, true
+                false, false, false, true, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -199,7 +200,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(addCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deleteCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
@@ -218,10 +219,10 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         String model=modelField.getText();
         String fuelType=fuelTypeField.getText();
         int yearOfProduction=Integer.parseInt(yearOfProductionField.getText());
-        float rentalPricePerDay=Float.parseFloat(rentalPricePerDayField.getText());    
+        float rentalPricePerDay=Float.parseFloat(rentalPricePerDayField.getText());   
         if(!brand.isBlank()&&!model.isBlank()&&!fuelType.isBlank()){
             carRepository.addCar(new Car(0,brand,model,fuelType,yearOfProduction
-                ,rentalPricePerDay));
+                ,rentalPricePerDay,false));
 
             brandField.setText("");
             modelField.setText("");
@@ -229,7 +230,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
             yearOfProductionField.setText("");
             rentalPricePerDayField.setText("");
 
-            showCars();
+            showCars(true,false);
         }
     }//GEN-LAST:event_addCarBtnActionPerformed
 
@@ -240,7 +241,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
                 getValueAt(row, column).toString());
         carRepository.removeCar(value);
         
-        showCars();
+        showCars(true,false);
     }//GEN-LAST:event_deleteCarBtnActionPerformed
 
     private void brandFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandFieldActionPerformed
@@ -262,11 +263,13 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         getValueAt(row, 4).toString());
         float rentalPricePerDay = Float.parseFloat(carTable.getModel().
         getValueAt(row, 5).toString());
-
+        boolean isRent=Boolean.parseBoolean(carTable.getModel().
+                getValueAt(row,6).toString());
+        
         carRepository.updateCar(new Car(id,brand,model,fuelType,yearOfProduction
-        ,rentalPricePerDay));
+        ,rentalPricePerDay,isRent));
 
-        showCars();
+        showCars(true,false);
     }//GEN-LAST:event_updateCarBtnActionPerformed
 
     public static void main(String args[]) {

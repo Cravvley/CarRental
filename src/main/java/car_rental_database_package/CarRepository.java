@@ -21,13 +21,15 @@ public class CarRepository {
 
        try {
            String sql = "INSERT INTO cars(id, brand, model, fuelType, "
-                   + "yearOfProduction, rentalPricePerDay) VALUES(?,?,?,?,?,?)";
+                   + "yearOfProduction, rentalPricePerDay, isRent) "
+                   + "VALUES(?,?,?,?,?,?,?)";
            ps = con.prepareStatement(sql);
            ps.setString(2, car.getBrand());
            ps.setString(3, car.getModel());
            ps.setString(4, car.getFuelType());
            ps.setInt(5, car.getYearOfProduction());
            ps.setFloat(6, car.getRentalPricePerDay());
+           ps.setBoolean(7, car.getIsRent());
            ps.execute();
        } catch(SQLException e) {
            System.out.println(e.toString());
@@ -75,7 +77,8 @@ public class CarRepository {
 
            car=new Car(rs.getInt("id"),rs.getString("brand"),
                rs.getString("model"),rs.getString("fuelType"),
-                   rs.getInt("yearOfProduction"),rs.getFloat("rentalPricePerDay")); 
+                   rs.getInt("yearOfProduction"),rs.getFloat("rentalPricePerDay")
+           ,rs.getBoolean("isRent")); 
 
        } catch(SQLException e) {
            System.out.println(e.toString());
@@ -96,15 +99,16 @@ public class CarRepository {
 
        try {
            String sql = "UPDATE cars SET brand = ? ,"
-                   + "model= ? , fuelType=? , yearOfProduction=?, "
-                   + "rentalPricePerDay WHERE id = ?";
+                   + "model = ? , fuelType=? , yearOfProduction = ?, "
+                   + "rentalPricePerDay = ? , isRent = ? WHERE id = ?";
            ps = con.prepareStatement(sql);
            ps.setString(1, car.getBrand());
            ps.setString(2, car.getModel());
            ps.setString(3, car.getFuelType());
            ps.setInt(4, car.getYearOfProduction());
            ps.setFloat(5,car.getRentalPricePerDay());
-           ps.setInt(6, car.getId());
+           ps.setBoolean(6,car.getIsRent());
+           ps.setInt(7, car.getId());
            ps.execute();
        } catch(SQLException e) {
            System.out.println(e.toString());
@@ -118,7 +122,7 @@ public class CarRepository {
        }
    }  
 
-   public ArrayList<Car> selectAll(){
+   public ArrayList<Car> selectAll(boolean all,boolean rent){
        ArrayList<Car> cars= new ArrayList<Car>();
 
        Connection con= DbConnection.connect();
@@ -126,16 +130,30 @@ public class CarRepository {
        ResultSet rs=null;    
 
        try {
-           String sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
-                   + "rentalPricePerDay "
+           String sql;
+           if(all){
+               sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
+                   + "rentalPricePerDay, isRent "
                    + "FROM cars";
+           }else{
+               if(rent){
+                   sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
+                   + "rentalPricePerDay, isRent "
+                   + "FROM cars where isRent=1";
+               }else{
+                   sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
+                   + "rentalPricePerDay, isRent "
+                   + "FROM cars where isRent=0";
+               }
+           }
            ps = con.createStatement();
            rs=ps.executeQuery(sql);
 
            while(rs.next()){
                cars.add(new Car(rs.getInt("id"),rs.getString("brand"),
                rs.getString("model"),rs.getString("fuelType"),
-                   rs.getInt("yearOfProduction"),rs.getFloat("rentalPricePerDay")));                           
+                   rs.getInt("yearOfProduction"),rs.getFloat("rentalPricePerDay")
+                            ,rs.getBoolean("isRent")));                           
            }
        } catch(SQLException e) {
            System.out.println(e.toString());
