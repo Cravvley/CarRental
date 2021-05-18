@@ -9,12 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CarRentalCarListWindowForm extends javax.swing.JFrame {
-
-    CarRepository carRepository;
     
     public CarRentalCarListWindowForm() {
-        carRepository=new CarRepository();
-        
+
         setSize(400,400);
         setLocation(600,300);
         setVisible(true);
@@ -29,7 +26,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
     }
     
     public void showCars(boolean all,boolean rent){
-        var userList=carRepository.selectAll(all,rent);
+        var userList=CarRepository.selectAll(all,rent);
         DefaultTableModel model = (DefaultTableModel)carTable.getModel();
         model.setRowCount(0);
         Object[]row = new Object[7];
@@ -260,7 +257,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
         }else{
             float rentalPricePerDay=Float.parseFloat(rentalPricePerDayField.getText());
             int yearOfProduction=Integer.parseInt(yearOfProductionField.getText());
-            carRepository.addCar(new Car(0,brand,model,fuelType,yearOfProduction
+            CarRepository.addCar(new Car(0,brand,model,fuelType,yearOfProduction
                     ,rentalPricePerDay,false));
 
             brandField.setText("");
@@ -285,7 +282,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
             int value = Integer.parseInt(carTable.getModel().
             getValueAt(row, 0).toString());
             
-            carRepository.removeCar(value);
+            CarRepository.removeCar(value);
             showCars(true,false);
         }
     }//GEN-LAST:event_deleteCarBtnActionPerformed
@@ -319,7 +316,7 @@ public class CarRentalCarListWindowForm extends javax.swing.JFrame {
            boolean isRentFromTable=Boolean.parseBoolean(carTable.getModel().
                    getValueAt(row,6).toString());
 
-           carRepository.updateCar(new Car(id,brand,model,fuelType,yearOfProduction
+           CarRepository.updateCar(new Car(id,brand,model,fuelType,yearOfProduction
            ,rentalPricePerDay,isRentFromTable));
 
            showCars(true,false);

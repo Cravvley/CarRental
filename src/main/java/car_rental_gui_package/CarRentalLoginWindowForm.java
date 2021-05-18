@@ -5,11 +5,7 @@ import javax.swing.JOptionPane;
 
 public class CarRentalLoginWindowForm extends javax.swing.JFrame {
 
-    AdminRepository adminRepository;
-    
     public CarRentalLoginWindowForm() {
-        
-        adminRepository=new AdminRepository();
 
         setVisible(true);
         setSize(200,200);
@@ -88,7 +84,7 @@ public class CarRentalLoginWindowForm extends javax.swing.JFrame {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         
-        boolean isMatched=adminRepository.login(usernameField.getText(), passwordField.getText());
+        boolean isMatched=AdminRepository.login(usernameField.getText(), passwordField.getText());
         
         if(isMatched){
             JOptionPane.showMessageDialog(null,"Username and password are correct");

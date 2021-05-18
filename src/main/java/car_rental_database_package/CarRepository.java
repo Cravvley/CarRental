@@ -10,20 +10,40 @@ import java.util.ArrayList;
 
 
 public class CarRepository {
-    
-    public CarRepository(){
+
+    static final String CREATE_CAR_TABLE = "CREATE TABLE IF NOT EXISTS Cars (id INTEGER, " +
+            "brand	TEXT NOT NULL, model TEXT NOT NULL, fuelType TEXT NOT NULL, yearOfProduction INTEGER NOT NULL, " +
+            "rentalPricePerDay REAL NOT NULL, isRent INTEGER NOT NULL, PRIMARY KEY(id AUTOINCREMENT))";
+    static final String INSERT_CAR ="INSERT INTO cars(id, brand, model, fuelType, "
+            + "yearOfProduction, rentalPricePerDay, isRent) VALUES(?,?,?,?,?,?,?)";
+    static final String GET_CAR ="SELECT * FROM cars WHERE id = ?";
+    static final String REMOVE_CAR ="DELETE FROM cars WHERE id = ?";
+    static final String UPDATE_CAR ="UPDATE cars SET brand = ? ,"
+            + "model = ? , fuelType=? , yearOfProduction = ?, "
+            + "rentalPricePerDay = ? , isRent = ? WHERE id = ?";
+    static final String GET_RENT_CARS ="SELECT id, brand, model, fuelType, yearOfProduction ,"
+            + "rentalPricePerDay, isRent "
+            + "FROM cars where isRent=1";
+    static final String GET_NO_RENT_CARS ="SELECT id, brand, model, fuelType, yearOfProduction ,"
+            + "rentalPricePerDay, isRent "
+            + "FROM cars where isRent=0";
+    static final String GET_CARS ="SELECT id, brand, model, fuelType, yearOfProduction ,"
+            + "rentalPricePerDay, isRent "
+            + "FROM cars";
+
+    private CarRepository(){
         
     }
 
-    public void addCar(Car car) {
+    public static void addCar(Car car) {
        Connection con= DbConnection.connect();
-       PreparedStatement ps = null; 
+       PreparedStatement ps = null;
+        Statement statement=null;
+        try {
+           statement=con.createStatement();
+           statement.execute(CREATE_CAR_TABLE);
 
-       try {
-           String sql = "INSERT INTO cars(id, brand, model, fuelType, "
-                   + "yearOfProduction, rentalPricePerDay, isRent) "
-                   + "VALUES(?,?,?,?,?,?,?)";
-           ps = con.prepareStatement(sql);
+           ps = con.prepareStatement(INSERT_CAR);
            ps.setString(2, car.getBrand());
            ps.setString(3, car.getModel());
            ps.setString(4, car.getFuelType());
@@ -43,13 +63,15 @@ public class CarRepository {
        }
    }
 
-   public void removeCar(int id) {
+   public static void removeCar(int id) {
        Connection con= DbConnection.connect();
-       PreparedStatement ps = null; 
-
+       PreparedStatement ps = null;
+       Statement statement=null;
        try {
-           String sql = "DELETE FROM cars WHERE id = ?";
-           ps = con.prepareStatement(sql);
+           statement=con.createStatement();
+           statement.execute(CREATE_CAR_TABLE);
+
+           ps = con.prepareStatement(REMOVE_CAR);
            ps.setInt(1, id);
            ps.execute();
        } catch(SQLException e) {
@@ -64,14 +86,17 @@ public class CarRepository {
        }
    }
 
-   public Car getCar(int id) {
+   public static Car getCar(int id) {
        Connection con= DbConnection.connect();
        PreparedStatement ps = null; 
        ResultSet rs=null; 
        Car car=null;
+       Statement statement=null;
        try {
-           String sql = "SELECT * FROM cars WHERE id = ?";
-           ps = con.prepareStatement(sql);
+           statement=con.createStatement();
+           statement.execute(CREATE_CAR_TABLE);
+
+           ps = con.prepareStatement(GET_CAR);
            ps.setInt(1, id);
            rs=ps.executeQuery();
 
@@ -93,15 +118,15 @@ public class CarRepository {
        return car;
    }
 
-   public void updateCar(Car car) {
+   public static void updateCar(Car car) {
        Connection con= DbConnection.connect();
-       PreparedStatement ps = null; 
-
+       PreparedStatement ps = null;
+       Statement statement=null;
        try {
-           String sql = "UPDATE cars SET brand = ? ,"
-                   + "model = ? , fuelType=? , yearOfProduction = ?, "
-                   + "rentalPricePerDay = ? , isRent = ? WHERE id = ?";
-           ps = con.prepareStatement(sql);
+           statement=con.createStatement();
+           statement.execute(CREATE_CAR_TABLE);
+
+           ps = con.prepareStatement(UPDATE_CAR);
            ps.setString(1, car.getBrand());
            ps.setString(2, car.getModel());
            ps.setString(3, car.getFuelType());
@@ -122,28 +147,25 @@ public class CarRepository {
        }
    }  
 
-   public ArrayList<Car> selectAll(boolean all,boolean rent){
+   public static ArrayList<Car> selectAll(boolean all,boolean rent){
        ArrayList<Car> cars= new ArrayList<Car>();
 
        Connection con= DbConnection.connect();
        Statement ps = null; 
-       ResultSet rs=null;    
-
+       ResultSet rs=null;
+       Statement statement=null;
        try {
+           statement=con.createStatement();
+           statement.execute(CREATE_CAR_TABLE);
+
            String sql;
            if(all){
-               sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
-                   + "rentalPricePerDay, isRent "
-                   + "FROM cars";
+               sql = GET_CARS;
            }else{
                if(rent){
-                   sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
-                   + "rentalPricePerDay, isRent "
-                   + "FROM cars where isRent=1";
+                   sql = GET_RENT_CARS;
                }else{
-                   sql = "SELECT id, brand, model, fuelType, yearOfProduction ,"
-                   + "rentalPricePerDay, isRent "
-                   + "FROM cars where isRent=0";
+                   sql = GET_NO_RENT_CARS;
                }
            }
            ps = con.createStatement();

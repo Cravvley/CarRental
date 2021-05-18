@@ -9,21 +9,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 public class RentalItemRepository {
-    
+
+    static final String CREATE_RENTAL_ITEM_TABLE = "CREATE TABLE IF NOT EXISTS RentalItems (id INTEGER, " +
+            "carId INTEGER NOT NULL, userId INTEGER NOT NULL, daysOfRent INTEGER NOT NULL, " +
+            "price REAL NOT NULL, PRIMARY KEY(id AUTOINCREMENT))";
+    static final String INSERT_RENTAL_ITEM = "INSERT INTO RentalItems (id, carId, userId, "
+            + "daysOfRent, price) VALUES(?,?,?,?,?)";
+    static final String GET_RENTAL_ITEM = "SELECT * FROM RentalItems WHERE id = ?";
+    static final String REMOVE_RENTAL_ITEM = "DELETE FROM RentalItems WHERE id = ?";
+    static final String UPDATE_CAR ="UPDATE cars SET brand = ? ,"
+            + "model = ? , fuelType=? , yearOfProduction = ?, "
+            + "rentalPricePerDay = ? , isRent = ? WHERE id = ?";
+    static final String GET_RENTAL_ITEMS = "SELECT id, carId, userId, daysOfRent "
+            + ", price FROM RentalItems";
+
     public RentalItemRepository(){
 
     }
    
     public void addRentalItem(RentalItem rentalItem) {
         Connection con= DbConnection.connect();
-        PreparedStatement ps = null; 
-        
+        PreparedStatement ps = null;
+        Statement statement=null;
         try {
-            String sql = "INSERT INTO RentalItems (id, carId, userId, "
-                    + "daysOfRent, price) VALUES(?,?,?,?,?)";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_RENTAL_ITEM_TABLE);
+
+            ps = con.prepareStatement(INSERT_RENTAL_ITEM);
             ps.setInt(2, rentalItem.getCarId());
             ps.setInt(3, rentalItem.getUserId());
             ps.setInt(4, rentalItem.getDaysOfRent());
@@ -43,11 +56,13 @@ public class RentalItemRepository {
     
     public void removeRentalItem(int id) {
         Connection con= DbConnection.connect();
-        PreparedStatement ps = null; 
-        
+        PreparedStatement ps = null;
+        Statement statement=null;
         try {
-            String sql = "DELETE FROM RentalItems WHERE id = ?";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_RENTAL_ITEM_TABLE);
+
+            ps = con.prepareStatement(REMOVE_RENTAL_ITEM);
             ps.setInt(1, id);
             ps.execute();
         } catch(SQLException e) {
@@ -67,9 +82,12 @@ public class RentalItemRepository {
         PreparedStatement ps = null; 
         ResultSet rs=null; 
         RentalItem rentalItem=null;
+        Statement statement=null;
         try {
-            String sql = "SELECT * FROM RentalItems WHERE id = ?";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_RENTAL_ITEM_TABLE);
+
+            ps = con.prepareStatement(GET_RENTAL_ITEM);
             ps.setInt(1, id);
             rs=ps.executeQuery();
             rentalItem=new RentalItem(rs.getInt("id"),rs.getInt("carId"),
@@ -93,14 +111,15 @@ public class RentalItemRepository {
         
         Connection con= DbConnection.connect();
         Statement ps = null; 
-        ResultSet rs=null;    
-        
+        ResultSet rs=null;
+        Statement statement=null;
         try {
-            String sql = "SELECT id, carId, userId, daysOfRent "
-                    + ", price FROM RentalItems";
+            statement=con.createStatement();
+            statement.execute(CREATE_RENTAL_ITEM_TABLE);
+
             ps = con.createStatement();
-            rs=ps.executeQuery(sql);
-          
+            rs=ps.executeQuery(GET_RENTAL_ITEMS);
+
             while(rs.next()){
                 rentals.add(new RentalItem(rs.getInt("id"),rs.getInt("carId"),
                 rs.getInt("userId"),rs.getInt("daysOfRent"),
@@ -119,5 +138,4 @@ public class RentalItemRepository {
         }
         return rentals;
     }
-
 }

@@ -9,18 +9,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class UserRepository {
- 
-    public UserRepository(){
+
+    static final String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS Users (id INTEGER, " +
+            "firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL, PRIMARY KEY(id AUTOINCREMENT))";
+    static final String INSERT_USER ="INSERT INTO users(id, firstName, lastName, email) VALUES(?,?,?,?)";
+    static final String GET_USER ="SELECT * FROM users WHERE id = ?";
+    static final String REMOVE_USER ="DELETE FROM users WHERE id = ?";
+    static final String UPDATE_USER ="UPDATE users SET firstName = ?, lastName= ? , email= ? WHERE id = ?";
+    static final String GET_USERS ="SELECT id, firstName, lastName, email FROM users";
+
+    private UserRepository(){
 
     }
    
-    public void addUser(User user) {
+    public static void addUser(User user) {
         Connection con= DbConnection.connect();
-        PreparedStatement ps = null; 
-        
+        PreparedStatement ps = null;
+        Statement statement=null;
+
         try {
-            String sql = "INSERT INTO users(id, firstName, lastName, email) VALUES(?,?,?,?)";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_USER_TABLE);
+
+            ps = con.prepareStatement(INSERT_USER);
             ps.setString(2, user.getFirstName());
             ps.setString(3, user.getLastName());
             ps.setString(4, user.getEmail());
@@ -37,13 +48,16 @@ public class UserRepository {
         }
     }
     
-    public void removeUser(int id) {
+    public static void removeUser(int id) {
         Connection con= DbConnection.connect();
-        PreparedStatement ps = null; 
-        
+        PreparedStatement ps = null;
+        Statement statement=null;
+
         try {
-            String sql = "DELETE FROM users WHERE id = ?";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_USER_TABLE);
+
+            ps = con.prepareStatement(REMOVE_USER);
             ps.setInt(1, id);
             ps.execute();
         } catch(SQLException e) {
@@ -58,14 +72,17 @@ public class UserRepository {
         }
     }
     
-    public User getUser(int id) {
+    public static User getUser(int id) {
         Connection con= DbConnection.connect();
         PreparedStatement ps = null; 
-        ResultSet rs=null; 
+        ResultSet rs=null;
+        Statement statement=null;
         User user=null;
         try {
-            String sql = "SELECT * FROM users WHERE id = ?";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_USER_TABLE);
+
+            ps = con.prepareStatement(GET_USER);
             ps.setInt(1, id);
             rs=ps.executeQuery();
             
@@ -85,14 +102,16 @@ public class UserRepository {
         return user;
     }
     
-    public void updateUser(User user) {
+    public static void updateUser(User user) {
         Connection con= DbConnection.connect();
-        PreparedStatement ps = null; 
-        
+        PreparedStatement ps = null;
+        Statement statement=null;
+
         try {
-            String sql = "UPDATE users SET firstName = ? ,"
-                    + "lastName=? , email=? WHERE id = ?";
-            ps = con.prepareStatement(sql);
+            statement=con.createStatement();
+            statement.execute(CREATE_USER_TABLE);
+
+            ps = con.prepareStatement(UPDATE_USER);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getEmail());
@@ -110,17 +129,20 @@ public class UserRepository {
         }
     }  
     
-    public ArrayList<User> selectAll(){
+    public static ArrayList<User> selectAll(){
         ArrayList<User> users= new ArrayList<User>();
         
         Connection con= DbConnection.connect();
         Statement ps = null; 
-        ResultSet rs=null;    
-        
+        ResultSet rs=null;
+        Statement statement=null;
+
         try {
-            String sql = "SELECT id, firstName, lastName, email FROM users";
+            statement=con.createStatement();
+            statement.execute(CREATE_USER_TABLE);
+
             ps = con.createStatement();
-            rs=ps.executeQuery(sql);
+            rs=ps.executeQuery(GET_USERS);
           
             while(rs.next()){
                 users.add(new User(rs.getInt("id"),rs.getString("firstName"),

@@ -12,14 +12,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class CarRentalMainWindowForm extends javax.swing.JFrame {
 
-    UserRepository userRepository;
-    CarRepository carRepository;
     RentalItemRepository rentalItemRepository;
     
     public CarRentalMainWindowForm() {
-        
-        userRepository=new UserRepository();
-        carRepository=new CarRepository();
+
         rentalItemRepository= new RentalItemRepository();
         
         setVisible(true);
@@ -35,7 +31,7 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
     }
     
      public void showUsers(){
-        var userList=userRepository.selectAll();
+        var userList=UserRepository.selectAll();
         DefaultTableModel model = (DefaultTableModel)userTable.getModel();
         model.setRowCount(0);
         Object[]row = new Object[4];
@@ -49,7 +45,7 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
     }
     
      public void showCars(boolean all,boolean rent){
-        var userList=carRepository.selectAll(all,rent);
+        var userList=CarRepository.selectAll(all,rent);
         DefaultTableModel model = (DefaultTableModel)carTable.getModel();
         model.setRowCount(0);
         Object[]row = new Object[7];
@@ -260,9 +256,9 @@ public class CarRentalMainWindowForm extends javax.swing.JFrame {
                 daysOfRent*pricePerDay);  
         rentalItemRepository.addRentalItem(rentalItem);
         
-        var carItem=carRepository.getCar(carIdValue);
+        var carItem=CarRepository.getCar(carIdValue);
         carItem.setIsRent(true);
-        carRepository.updateCar(carItem);
+        CarRepository.updateCar(carItem);
      
         daysOfRentField.setText("");
         showCars(false,false);   

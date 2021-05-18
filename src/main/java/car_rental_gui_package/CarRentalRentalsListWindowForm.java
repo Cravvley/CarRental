@@ -8,14 +8,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class CarRentalRentalsListWindowForm extends javax.swing.JFrame {
 
-    
-    UserRepository userRepository;
-    CarRepository carRepository;
     RentalItemRepository rentalItemRepository;
     
-    public CarRentalRentalsListWindowForm() { 
-        userRepository=new UserRepository();
-        carRepository=new CarRepository();
+    public CarRentalRentalsListWindowForm() {
         rentalItemRepository= new RentalItemRepository();
         
         setSize(400,400);
@@ -200,9 +195,9 @@ public class CarRentalRentalsListWindowForm extends javax.swing.JFrame {
         int carIdValue = Integer.parseInt(rentalItemsTable.getModel().
                 getValueAt(selectRow, 1).toString());
         
-        var carItem=carRepository.getCar(carIdValue);
+        var carItem=CarRepository.getCar(carIdValue);
         carItem.setIsRent(false);
-        carRepository.updateCar(carItem);
+        CarRepository.updateCar(carItem);
         
         rentalItemRepository.removeRentalItem(rentalItemId);
         
@@ -241,8 +236,8 @@ public class CarRentalRentalsListWindowForm extends javax.swing.JFrame {
     }
     
     public void showSelectRentalCarAndUser(int userIdValue,int carIdValue){
-        var userItem=userRepository.getUser(userIdValue);
-        var carItem=carRepository.getCar(carIdValue);
+        var userItem=UserRepository.getUser(userIdValue);
+        var carItem=CarRepository.getCar(carIdValue);
         
         
         DefaultTableModel userTableModel = (DefaultTableModel)userTable.getModel();

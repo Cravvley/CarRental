@@ -9,10 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class CarRentalUserListWindowForm extends javax.swing.JFrame {
 
-    UserRepository userRepository;
- 
     public CarRentalUserListWindowForm() {
-        userRepository=new UserRepository();
         
         setSize(400,400);
         setLocation(600,300);
@@ -28,7 +25,7 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
     }
     
     public void showUsers(){
-        var userList=userRepository.selectAll();
+        var userList=UserRepository.selectAll();
         DefaultTableModel model = (DefaultTableModel)userTable.getModel();
         model.setRowCount(0);
         Object[]row = new Object[4];
@@ -216,7 +213,7 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Please type correct data"); 
                
             } else{
-                userRepository.addUser(new User(0,firstName,lastName,email));
+                UserRepository.addUser(new User(0,firstName,lastName,email));
                 
                 firstNameField.setText("");
                 lastNameField.setText("");
@@ -231,7 +228,7 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
         int row = userTable.getSelectedRow();
         int value = Integer.parseInt(userTable.getModel().
                 getValueAt(row, column).toString());
-        userRepository.removeUser(value);
+        UserRepository.removeUser(value);
         
         showUsers();
     }//GEN-LAST:event_deleteUserBtnActionPerformed
@@ -257,7 +254,7 @@ public class CarRentalUserListWindowForm extends javax.swing.JFrame {
         if(!matcher.matches()){
             JOptionPane.showMessageDialog(null, "Please type correct data"); 
         }else{
-            userRepository.updateUser(new User(id,firstName,lastName,email));
+            UserRepository.updateUser(new User(id,firstName,lastName,email));
         
             showUsers();
         }
