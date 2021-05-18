@@ -190,7 +190,7 @@
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
                 <Column editable="false" title="Brand" type="java.lang.String"/>
                 <Column editable="false" title="Model" type="java.lang.String"/>
-                <Column editable="true" title="Fuel type" type="java.lang.String"/>
+                <Column editable="false" title="Fuel type" type="java.lang.String"/>
                 <Column editable="false" title="Year of production" type="java.lang.Integer"/>
                 <Column editable="true" title="Rental price per day" type="java.lang.Float"/>
                 <Column editable="false" title="Is rent" type="java.lang.Boolean"/>

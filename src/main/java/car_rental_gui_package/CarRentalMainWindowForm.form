@@ -112,8 +112,32 @@
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
                 <Column editable="false" title="FirstName" type="java.lang.String"/>
                 <Column editable="false" title="LastName" type="java.lang.String"/>
-                <Column editable="true" title="Email" type="java.lang.String"/>
+                <Column editable="false" title="Email" type="java.lang.String"/>
               </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -136,9 +160,9 @@
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
                 <Column editable="false" title="Brand" type="java.lang.String"/>
                 <Column editable="false" title="Model" type="java.lang.String"/>
-                <Column editable="true" title="Fuel type" type="java.lang.String"/>
+                <Column editable="false" title="Fuel type" type="java.lang.String"/>
                 <Column editable="false" title="Year of production" type="java.lang.Integer"/>
-                <Column editable="true" title="Rental price per day" type="java.lang.Float"/>
+                <Column editable="false" title="Rental price per day" type="java.lang.Float"/>
                 <Column editable="false" title="Is rent" type="java.lang.Boolean"/>
               </Table>
             </Property>
